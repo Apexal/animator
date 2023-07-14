@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+}
+
+.container>img {
+    opacity: 0.1;
+}
+
+.container>canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.container>.tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: block;
+    padding: 5px;
+    background-color: black;
+    color: white;
+    z-index: 3;
+}
