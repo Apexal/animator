@@ -30,12 +30,12 @@ export function App() {
   
   return (
     <main class="container mx-auto py-10">
-      <h1 class="text-5xl font-bold mb-3">Wrathskeller Prototype</h1>
+      <h1 class="text-5xl font-bold mb-5">Wrathskeller Prototype</h1>
       {isLoadingModels ? (
-        <div class="bg-amber-300 p-3 rounded-lg mb-3">
+        <div class="bg-amber-300 p-3 rounded-lg mb-5">
           <p>Loading AI models...</p>
         </div>
-      ) : <Scanner imageURL="/guy.jpg" />}
+      ) : <Scanner bodyModel={bodyModel} poseDetector={poseDetector} width={500} imageURL="/guy.jpg" />}
     </main>
   );
 }

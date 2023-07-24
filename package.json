@@ -21,6 +21,7 @@
     "@tensorflow-models/body-pix": "^2.2.0",
     "@tensorflow-models/pose-detection": "^2.1.0",
     "@tensorflow/tfjs": "^4.9.0",
+    "clsx": "^2.0.0",
     "jszip": "^3.10.1",
     "preact": "^10.16.0"
   }
