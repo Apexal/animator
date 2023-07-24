@@ -1,3 +1,5 @@
+import { Point } from "./canvas";
+
 export const pose_landmarks = [
   "nose",
   "left_eye_inner",
@@ -34,7 +36,7 @@ export const pose_landmarks = [
   "right_foot_index",
 ] as const;
 
-export type BodyPartGroup = keyof typeof bodyPartGroups;
+export type BodyPartGroupID = keyof typeof bodyPartGroups;
 
 export const bodyPartGroups = {
   torso: new Set([12, 13]),
@@ -53,17 +55,17 @@ export const bodyPartGroups = {
   right_foot: new Set([23]),
 } as const;
 
-export const bodyPartGroupsByPartId: Record<number, BodyPartGroup> =
+export const bodyPartGroupsByPartId: Record<number, BodyPartGroupID> =
   Object.entries(bodyPartGroups).reduce((obj, entry) => {
     for (const partId of entry[1].values()) {
-      obj[partId] = entry[0] as BodyPartGroup;
+      obj[partId] = entry[0] as BodyPartGroupID;
     }
     return obj;
-  }, {} as Record<number, BodyPartGroup>);
+  }, {} as Record<number, BodyPartGroupID>);
 
 export const bodyPartGroupsToParent: Record<
-  BodyPartGroup,
-  BodyPartGroup | "root"
+  BodyPartGroupID,
+  BodyPartGroupID | "root"
 > = {
   head: "torso",
   torso: "root",
@@ -80,3 +82,15 @@ export const bodyPartGroupsToParent: Record<
   right_lower_leg: "right_upper_leg",
   right_foot: "right_lower_leg",
 } as const;
+
+export interface BodyPart {
+  id: BodyPartGroupID;
+  name: string;
+  topLeft: Point;
+  rawImageBase64: string;
+}
+
+export interface Character {
+  name: string;
+  body: Record<BodyPartGroupID, BodyPart>;
+}

@@ -1,7 +1,8 @@
-import * as spine from "@esotericsoftware/spine-core";
+/** http://en.esotericsoftware.com/spine-json-format */
+
 import { Pose } from "@tensorflow-models/pose-detection/dist/types";
 import {
-  BodyPartGroup,
+  BodyPartGroupID,
   bodyPartGroups,
   bodyPartGroupsToParent,
   pose_landmarks,
@@ -20,6 +21,8 @@ type LRBone = Pick<Bone, "x" | "y" | "length" | "rotation">;
 
 type Coordinate = { x: number; y: number };
 
+
+/** http://en.esotericsoftware.com/spine-json-format */
 export function generateSpineJSON(width: number, height: number, pose: Pose) {
   const bones: Bone[] = [{ name: "root", length: 0, rotation: 0, x: 0, y: 0 }];
   const slots = [];
@@ -28,41 +31,40 @@ export function generateSpineJSON(width: number, height: number, pose: Pose) {
   for (const bodyPartGroup in bodyPartGroups) {
     const bone = getBoneFromPose(
       bones.find(
-        (b) => b.name === bodyPartGroupsToParent[bodyPartGroup as BodyPartGroup]
+        (b) => b.name === bodyPartGroupsToParent[bodyPartGroup as BodyPartGroupID]
       )!,
       pose,
-      bodyPartGroup as BodyPartGroup
+      bodyPartGroup as BodyPartGroupID
     );
-    console.log(bone);
 
     bones.push({
       name: bodyPartGroup,
-      parent: bodyPartGroupsToParent[bodyPartGroup as BodyPartGroup],
+      parent: bodyPartGroupsToParent[bodyPartGroup as BodyPartGroupID],
       ...bone,
     });
 
-    // slots.push({
-    //   name: bodyPartGroup,
-    //   bone: bodyPartGroup,
-    //   attachment: bodyPartGroup,
-    // });
+    slots.push({
+      name: bodyPartGroup,
+      bone: bodyPartGroup,
+      attachment: bodyPartGroup,
+    });
 
-    // attachments[bodyPartGroup] = {
-    //   [bodyPartGroup]: {
-    //     x: 0,
-    //     y: 0,
-    //     rotation: 270,
-    //     width,
-    //     height,
-    //   },
-    // };
+    attachments[bodyPartGroup] = {
+      [bodyPartGroup]: {
+        x: 0,
+        y: 0,
+        rotation: 270,
+        width,
+        height,
+      },
+    };
   }
 
   return {
     skeleton: {
       hash: "QtXWOjjWRJI",
       spine: "4.1.19",
-      images: "C:/Users/thefr/Downloads/bodyParts (2)",
+      images: "",
       audio: "",
     },
     bones,
@@ -82,7 +84,7 @@ export function generateSpineJSON(width: number, height: number, pose: Pose) {
 export function getBoneFromPose(
   parentBone: Bone,
   pose: Pose,
-  bodyPartGroup: BodyPartGroup
+  bodyPartGroup: BodyPartGroupID
 ): LRBone {
   const posePos = (l: typeof pose_landmarks[number]): Coordinate => {
     const p = pose.keypoints[pose_landmarks.indexOf(l)];

@@ -1,7 +1,7 @@
 {
   "name": "animator",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,14 +9,16 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "@preact/preset-vite": "^2.5.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.4"
   },
   "dependencies": {
-    "@esotericsoftware/spine-core": "^4.2.11",
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tensorflow-models/body-pix": "^2.2.0",
-    "@tensorflow-models/pose-detection": "^2.0.0",
-    "@tensorflow/tfjs": "^4.2.0",
-    "jszip": "^3.10.1"
+    "@tensorflow-models/pose-detection": "^2.1.0",
+    "@tensorflow/tfjs": "^4.9.0",
+    "jszip": "^3.10.1",
+    "preact": "^10.16.0"
   }
 }

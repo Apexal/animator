@@ -1,4 +1,4 @@
-import "@tensorflow/tfjs";
+import { setBackend } from "@tensorflow/tfjs";
 
 import { default as JSZip } from "jszip";
 
@@ -34,6 +34,7 @@ async function init() {
     const img = document.createElement("img");
     img.src = imageURL;
     container.appendChild(img);
+    container.classList.add("loading");
 
     img.onload = async () => {
       // Create canvas
@@ -48,6 +49,8 @@ async function init() {
         predict(net, img),
         poseDetector.estimatePoses(img),
       ]);
+
+      container.classList.remove("loading");
 
       const zip = new JSZip();
 
@@ -80,4 +83,4 @@ async function init() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => setBackend("webgl").then(() => init()));
