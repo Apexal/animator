@@ -3,6 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import { createPoseDetector, loadBodyModel } from "./ai";
 import { PoseDetector } from "@tensorflow-models/pose-detection";
 import { BodyPix } from "@tensorflow-models/body-pix";
+import { Scanner } from "./Scanner";
 
 export function App() {
   // Tensorflow models
@@ -28,13 +29,13 @@ export function App() {
   const isLoadingModels = !(poseDetector && bodyModel);
   
   return (
-    <main>
-      <h1>Wrathskeller Prototype</h1>
-      {isLoadingModels && (
-        <div>
+    <main class="container mx-auto py-10">
+      <h1 class="text-5xl font-bold mb-3">Wrathskeller Prototype</h1>
+      {isLoadingModels ? (
+        <div class="bg-amber-300 p-3 rounded-lg mb-3">
           <p>Loading AI models...</p>
         </div>
-      )}
+      ) : <Scanner imageURL="/guy.jpg" />}
     </main>
   );
 }
