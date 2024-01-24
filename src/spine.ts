@@ -177,8 +177,10 @@ export function baseBoneOnParent(bone: LRBone, parentBone: LRBone): LRBone {
   const relativeRotation = localRotation;
 
   return {
-    ...relativePosition,
-    rotation: relativeRotation * (180 / Math.PI), // back to degrees
+    // ...relativePosition,
+    x: 0,
+    y: 0,
+    rotation: 0, //relativeRotation * (180 / Math.PI), // back to degrees
     length: bone.length,
   };
 }
@@ -194,7 +196,7 @@ function lengthAndRotation(
 
   return {
     length,
-    rotation: Math.atan(dy / dx) * (180 / Math.PI),
+    rotation: 0//Math.atan(dy / dx) * (180 / Math.PI),
   };
 }
 

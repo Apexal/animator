@@ -4,10 +4,11 @@ import { bodyPartGroups } from "./body";
 
 export function drawMarkers(
   canvas: HTMLCanvasElement,
-  pose: poseDetection.Pose | null
+  pose: poseDetection.Pose | null,
+  withLabels: boolean = false
 ) {
   const ctx = canvas.getContext("2d");
-  const radius = 5;
+  const radius = 2;
 
   if (!pose || !ctx) {
     return;
@@ -19,7 +20,7 @@ export function drawMarkers(
     ctx.arc(keypoint.x, keypoint.y, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = "red";
     ctx.fill();
-    if (keypoint.name) {
+    if (withLabels && keypoint.name) {
       ctx.fillText(keypoint.name, keypoint.x + 10, keypoint.y + 10);
     }
   }
@@ -43,12 +44,12 @@ export function drawBodyPartGroup(
     false,
     Array.from(bodyPartGroups[bodyPartGroup].values())
   );
-
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "source-over";
   ctx.putImageData(bodyMask, 0, 0);
   ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 0, 0, img.width, img.height);
 }
 
 export function canvasToBlob(canvas: HTMLCanvasElement) {
